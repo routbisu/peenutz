@@ -28,7 +28,7 @@ export default {
     const startTime = getFromLS('startTime');
     const endTime = getFromLS('endTime');
     const monthlySalary = getFromLS('monthlySalary');
-    const workingDaysInMonth = getFromLS('workingDaysInMonth');
+    const workingDaysInMonth = getFromLS('workingDaysInMonth') || 21;
     const perDaySalary = Number(monthlySalary) / Number(workingDaysInMonth);
     const getWorkingSeconds = getTotalWorkingSeconds(startTime, endTime);
     const perSecSalary = perDaySalary / getWorkingSeconds;

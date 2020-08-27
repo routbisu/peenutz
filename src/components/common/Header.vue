@@ -1,6 +1,7 @@
 <template>
   <header>
     <div class="logo-section"><span>🥜</span> Peenutz</div>
+    <a href="https://github.com/routbisu/peenutz" target="_blank">⚙️</a>
   </header>
 </template>
 
@@ -10,7 +11,16 @@ export default {};
 
 <style scoped lang="scss">
 header {
-  padding: 20px;
+  padding: 20px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
 
   .logo-section {
     text-align: left;
