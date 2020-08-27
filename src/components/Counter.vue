@@ -4,19 +4,24 @@
       <h1>₹ {{ inr }}</h1>
     </div>
     <div class="secondary-currency">
-      <h2>SGD 200.50</h2>
-      <h2>USD 200.50</h2>
+      <h2>SGD {{ sgd }}</h2>
+      <h2>USD {{ usd }}</h2>
     </div>
   </div>
 </template>
 
 <script>
 import { getExchangeRates } from '../services/forex';
-import { getFromLS } from '../services/common';
+import {
+  getFromLS,
+  getDiffSecondsFromStart,
+  getTotalWorkingSeconds,
+  formatMoney
+} from '../services/common';
 
 export default {
   data() {
-    return { inr: 5000 };
+    return { inr: 0, sgd: 0, usd: 0 };
   },
   async created() {
     const { rates } = await getExchangeRates();
@@ -24,14 +29,25 @@ export default {
     const endTime = getFromLS('endTime');
     const monthlySalary = getFromLS('monthlySalary');
     const workingDaysInMonth = getFromLS('workingDaysInMonth');
+    const perDaySalary = Number(monthlySalary) / Number(workingDaysInMonth);
+    const getWorkingSeconds = getTotalWorkingSeconds(startTime, endTime);
+    const perSecSalary = perDaySalary / getWorkingSeconds;
 
-    console.log('rates', rates);
-    console.log('startTime', startTime);
-    console.log('endTime', endTime);
-    console.log('monthlySalary', monthlySalary);
-    console.log('workingDaysInMonth', workingDaysInMonth);
+    setInterval(() => {
+      if (rates) {
+        const { INR, USD } = rates;
+        const diffSeconds = getDiffSecondsFromStart(
+          startTime,
+          getWorkingSeconds
+        );
+        const payTillNow = diffSeconds * perSecSalary;
 
-    this.inr = 8000;
+        // Assign salary
+        this.sgd = formatMoney(payTillNow);
+        this.inr = formatMoney(payTillNow * INR);
+        this.usd = formatMoney(payTillNow * USD);
+      }
+    }, 1000);
   }
 };
 </script>
