@@ -6,10 +6,10 @@ This reads and saves data to localstorage. Run the following commands in console
 to save data to local storage. All times must be entered in HHMM. For example 02:00 PM should be 1400.
 
 ```
-localstorage.startTime = 1000
-localstorage.endTime = 1830
-localstorage.monthlySalary = 8000
-localstorage.workingDaysInMonth = 21 // Optional
+localStorage.startTime = 1000
+localStorage.endTime = 1830
+localStorage.monthlySalary = 8000
+localStorage.workingDaysInMonth = 21 // Optional
 ```
 
 ## Project setup
